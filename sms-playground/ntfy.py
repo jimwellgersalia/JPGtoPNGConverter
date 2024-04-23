@@ -5,6 +5,10 @@ import requests
 # requests.post("https://ntfy.sh/jimwelllife",
 #               data="Backup successful 😀".encode(encoding='utf-8'))
 
+# requests.post("https://ntfy.sh/jimwelllife",
+#    data="Oh my ...",
+#    headers={ "Title": "Dogs are better than cats" })
+
 requests.post("https://ntfy.sh/jimwelllife",
               data="Please read this is important",
               headers={
