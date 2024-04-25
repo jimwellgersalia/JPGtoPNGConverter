@@ -2,17 +2,24 @@ import requests
 from bs4 import BeautifulSoup
 import pprint
 
-web_add = 'https://news.ycombinator.com/'
-for pages in range(1, 4):  # get how many pages you want by replacing the stop
-    res = requests.get(web_add + '/?p=' + str(pages))
-    soup = BeautifulSoup(res.text, 'html.parser')
-    links = soup.select('.titleline > a')
-    subtext = soup.select('.subtext')
+res = requests.get('https://news.ycombinator.com/')
+res2 = requests.get('https://news.ycombinator.com/?p=2')
+soup = BeautifulSoup(res.text, 'html.parser')
+soup2 = BeautifulSoup(res2.text, 'html.parser')
+links = soup.select('.titleline > a')
+subtext = soup.select('.subtext')
+links2 = soup2.select('.titleline > a')
+subtext2 = soup2.select('.subtext')
+
+mega_links = links + links2
+mega_subtext = subtext + subtext2
 
 
 def sort_by_vote_rev(hnlist):
     # return the hn list sorted desc
-    return sorted(hnlist, key=lambda k: k['votes'], reverse=True)
+    hnlist.sort(key=lambda k: k['votes'], reverse=True)
+    return hnlist
+    # return sorted.(hnlist, key=lambda k: k['votes'], reverse= True)
 
 
 def create_custom_hn(links, subtext):
@@ -32,4 +39,4 @@ def create_custom_hn(links, subtext):
     return sort_by_vote_rev(hn)
 
 
-pprint.pprint(create_custom_hn(links, subtext))
+pprint.pprint(create_custom_hn(mega_links, mega_subtext))
